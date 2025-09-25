@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ITI GROUP - Global Industrial Powerhouse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Arial', 'Helvetica', sans-serif;
+      margin:0; padding:0; background: #1a1a1a;
+      color:#FFF; direction: ltr;
+    }
+    .slide {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 50px 20px 40px 20px;
+      box-sizing: border-box; position:relative;
+      overflow:hidden;
+      transition: background 1.7s;
+      background: linear-gradient(135deg, #1a1a1a 0%, #8B1538 50%, #F4C430 100%);
+      z-index: 2;
+    }
+    .slide[active] {
+      z-index: 3;
+      animation: fadeIn 1.2s;
+    }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    
+    .slide-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.15; z-index: -1;
+      filter: blur(8px);
+      transform: scale(1.05);
+    }
+    
+    .slide-img-overlay {
+      position: relative; z-index: 10;
+      max-width: 460px; max-height:270px;
+      border-radius:24px; box-shadow:0 4px 32px rgba(0,0,0,0.6);
+      opacity: 0;
+      animation: imgFadeIn 1.8s ease-out forwards;
+      animation-delay: 0.5s;
+      margin: 20px 0 30px 0;
+    }
+    @keyframes imgFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    h1, h2, h3 {
+      color: #F4C430; /* ITI Yellow */
+      text-shadow: 2px 4px 20px rgba(0,0,0,0.8);
+      font-weight: bold; z-index: 10; position: relative;
+      margin: 0 0 20px 0;
+    }
+    h1 { font-size: 2.5em; }
+    h2 { font-size: 2em; }
+    
+    .main-desc {
+      color: #FFFFFF; font-size: 1.1em; line-height: 1.6;
+      margin-bottom: 30px; max-width: 800px; text-align: center;
+      animation: fadeText 1.4s; z-index: 10; position: relative;
+      background: rgba(139,21,56,0.85); /* ITI Red with transparency */
+      padding: 25px 30px; border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(139,21,56,0.3);
+    }
+    @keyframes fadeText {
+      0%{opacity:0;transform:translateY(30px);}
+      100%{opacity:1;transform:translateY(0);}
+    }
+    
+    .section-title {
+      background: linear-gradient(135deg, #8B1538 0%, #F4C430 100%);
+      color: #fff; padding: 12px 40px; border-radius: 35px;
+      font-size: 1.6em; font-weight: 700; margin: 30px 0 25px 0;
+      letter-spacing: 1px; z-index: 10; position: relative;
+      box-shadow: 0 6px 25px rgba(244,196,48,0.4);
+      animation: titlePulse 2.5s ease-in-out infinite alternate;
+      text-transform: uppercase;
+      border: 2px solid #F4C430;
+    }
+    @keyframes titlePulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    
+    ul, li {
+      font-size:1.15em; color:#F9F9F9; z-index: 10; position: relative;
+      text-align: left; margin: 10px 0;
+    }
+    ul {
+      background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px;
+      border-left: 4px solid #F4C430;
+    }
+    
+    .nav-btns {
+      display:flex; gap:15px; justify-content:center;
+      margin:40px 0 0 0; z-index: 20; position: relative;
+    }
+    .nav-btn {
+      padding: 15px 35px;
+      border: 2px solid #F4C430; border-radius: 30px;
+      background: linear-gradient(135deg, #8B1538 0%, #F4C430 100%);
+      color: #fff; font-size:1.1em; font-weight:700;
+      cursor:pointer; transition:.3s;
+      box-shadow:0 4px 20px rgba(244,196,48,0.3);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .nav-btn:hover { 
+      background: linear-gradient(135deg, #F4C430 0%, #8B1538 100%);
+      transform: translateY(-3px);
+      box-shadow:0 8px 30px rgba(244,196,48,0.5);
+    }
+    
+    .slide-counter {
+      position: fixed; top: 25px; right: 25px;
+      background: linear-gradient(135deg, #8B1538 0%, #F4C430 100%);
+      color: white; padding: 10px 20px; border-radius: 25px;
+      font-size: 1em; font-weight: 600; z-index: 100;
+      border: 2px solid #F4C430;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    
+    .logo-header {
+      position: absolute; top: 25px; left: 25px;
+      color: #F4C430; font-size: 1.5em; font-weight: bold;
+      z-index: 100; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    
+    .highlight-text {
+      color: #F4C430; font-weight: bold;
+    }
+    
+    .location-badge {
+      background: rgba(244,196,48,0.2);
+      color: #F4C430; padding: 5px 15px; border-radius: 20px;
+      font-size: 0.9em; margin: 10px 0;
+      border: 1px solid #F4C430;
+    }
+    
+    /* Thank You Slide Special Styles */
+    .thank-you-slide {
+      background: radial-gradient(circle at center, #F4C430 0%, #8B1538 50%, #1a1a1a 100%);
+      animation: thankyouGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes thankyouGlow {
+      0% { box-shadow: inset 0 0 50px rgba(244,196,48,0.3); }
+      100% { box-shadow: inset 0 0 100px rgba(244,196,48,0.6); }
+    }
+    
+    .logo-large {
+      width: 300px; height: auto; margin: 30px 0;
+      animation: logoFloat 4s ease-in-out infinite;
+      filter: none;
+    }
+    @keyframes logoFloat {
+      0%,100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+    }
+    
+    .thank-you-title {
+      font-size: 3.5em; color: #F4C430; 
+      text-shadow: 3px 6px 30px rgba(0,0,0,0.9);
+      animation: titleGlow 2s ease-in-out infinite alternate;
+      margin: 20px 0;
+    }
+    @keyframes titleGlow {
+      0% { text-shadow: 3px 6px 30px rgba(244,196,48,0.6); }
+      100% { text-shadow: 3px 6px 50px rgba(244,196,48,1); }
+    }
+    
+    .thank-you-message {
+      font-size: 1.4em; color: #FFFFFF; text-align: center;
+      background: rgba(0,0,0,0.7); padding: 30px 40px;
+      border-radius: 20px; max-width: 700px;
+      border: 3px solid #F4C430;
+      animation: messageAppear 2s ease-out;
+      margin: 30px 0;
+    }
+    @keyframes messageAppear {
+      0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    
+    .contact-info {
+      background: rgba(139,21,56,0.9);
+      color: #F4C430; padding: 20px 30px; border-radius: 15px;
+      font-size: 1.1em; margin: 20px 0;
+      border: 2px solid #F4C430;
+      animation: contactPulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes contactPulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.01); }
+    }
+    
+    @media(max-width:768px){
+      .slide { padding: 30px 15px; }
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.4em; }
+      .main-desc { font-size: 1em; padding: 20px; }
+      .section-title { font-size: 1.2em; padding: 10px 25px; }
+      ul,li { font-size: 1em; }
+      .nav-btn { padding: 12px 25px; font-size: 1em; }
+      .logo-header { font-size: 1.2em; }
+      .logo-large { width: 200px; }
+      .thank-you-title { font-size: 2.5em; }
+      .thank-you-message { font-size: 1.1em; padding: 20px 25px; }
+    }
+    
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      animation: revealAnim 1.4s forwards;
+    }
+    @keyframes revealAnim {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Logo Header -->  
+<div class="logo-header">ITI GROUP</div>  
+
+<!-- Slide Counter -->  
+<div class="slide-counter" id="slideCounter">1 / 15</div>  
+
+<!-- Slides Container -->  
+<div id="slidesCtn" style="width:100%;">  
+
+  <div class="slide" active>
+    <img src="slides/1.png.png" class="slide-bg" alt="Blurred Background">
+    <img src="slides/1.png.png" class="slide-img-overlay" alt="Clear Image Overlay">
+    <h1 class="section-title reveal">Global Industrial Powerhouse</h1>
+    <div class="main-desc reveal">
+      The <span class="highlight-text">ITI Group</span> is a dynamic and diversified global enterprise with a legacy that spans over <span class="highlight-text">50 years</span>. Headquartered in Europe, the Group commands a strong international presence across the Middle East, Africa, Europe, Asia, and the United States. With annual revenues exceeding <span class="highlight-text">$2 billion</span>, ITI has established itself as a proven force across multiple industries—anchored by its leadership in the production, trade, and global distribution of building materials.
+    </div>
+  </div>
+
+  <!-- كرر البنية أعلاه لكل شريحة -->
+  <!-- شريحة 2 -->  
+  <div class="slide">
+    <img src="slides/1.png.png" class="slide-bg" alt="Blurred Background">
+    <img src="slides/1.png.png" class="slide-img-overlay" alt="Clear Image Overlay">  
+    <h2 class="section-title reveal">Cement & Building Materials Leadership</h2>
+    <div class="main-desc reveal">
+      Over the past <span class="highlight-text">five years</span>, ITI Group has expanded its footprint in the cement industry by integrating key production assets previously operated by global leaders such as <span class="highlight-text">HeidelbergCement</span> and <span class="highlight-text">InterCement</span>. This strategic expansion reflects the Group's commitment to strengthening its market position, enhancing production capacity, and driving operational excellence. With a focus on growth and value creation, ITI continues to solidify its role as a major player in the global cement and building materials sector.
+    </div>
+  </div>
+
+  <!-- شريحة 3 -->  
+  <div class="slide">
+    <img src="slides/1.png.png" class="slide-bg" alt="Blurred Background">
+    <img src="slides/1.png.png" class="slide-img-overlay" alt="Clear Image Overlay">  
+    <h2 class="section-title reveal">Production Footprint</h2>
+    <div class="main-desc reveal">
+      Established in <span class="highlight-text">1987</span>, <span class="highlight-text">Amreyah Cement</span> brings together decades of industry experience and advanced technology to deliver high-quality, dependable grey cement. Operating two fully integrated production lines, the company has contributed to some of Egypt's most iconic landmarks, especially in Alexandria. As it continues to adapt to the evolving needs of the construction industry, Amreyah now proudly exports to markets across Africa, Europe, and the United States.
+      <br><br>
+      <ul>
+        <li><span class="highlight-text">40% ownership</span></li>
+        <li>One fully integrated grey cement production line</li>
+        <li>Export to African, European, and American markets</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ... أكمل باقي الشرائح بنفس الطريقة ... -->  
+
+  <!-- شريحة الشكر -->
+  <div class="slide thank-you-slide">
+    <img src="slides/logo.png" class="logo-large" alt="ITI Group Logo">
+    <h1 class="thank-you-title reveal">Thank You</h1>
+    <div class="thank-you-message reveal">
+      Thank you for your time and attention. We look forward to building the future together with <span class="highlight-text">ITI Group</span> - your trusted partner in global industrial excellence.
+    </div>
+    <div class="contact-info reveal">
+      <strong>ITI GROUP</strong><br>
+      🌍 Inversiones en Tecnología Industrial<br>
+      📧 Contact us for partnership opportunities<br>
+      🏗️ Building Tomorrow's Infrastructure Today
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->  
+  <div class="nav-btns">  
+    <button class="nav-btn" onclick="prevSlide()">⬅ Previous</button>  
+    <button class="nav-btn" onclick="nextSlide()">Next ➡</button>  
+  </div>  
+</div>  
+
+<script>  
+let slides = document.querySelectorAll('.slide');  
+let current = 0;  
+let totalSlides = slides.length;  
+
+function updateCounter() {  
+  document.getElementById('slideCounter').textContent = `${current + 1} / ${totalSlides}`;  
+}  
+
+function showSlide(idx){  
+  slides.forEach((s,i)=>{  
+    s.removeAttribute('active');  
+    s.style.display = (i===idx) ? 'flex' : 'none';  
+    if(i===idx) s.setAttribute('active','');  
+  });  
+  updateCounter();  
+}  
+
+function nextSlide(){  
+  current = (current+1 >= slides.length) ? 0 : current+1;  
+  showSlide(current);  
+}  
+
+function prevSlide(){  
+  current = (current-1 < 0) ? slides.length-1 : current-1;  
+  showSlide(current);  
+}  
+
+showSlide(current);  
+
+// Keyboard navigation  
+document.addEventListener('keydown', function(e){  
+  if(e.key==='ArrowRight' || e.key===' ') nextSlide();  
+  if(e.key==='ArrowLeft') prevSlide();  
+  if(e.key==='Home'){ current=0; showSlide(current);}  
+  if(e.key==='End'){ current=slides.length-1; showSlide(current);}  
+});  
+
+// Touch/swipe support  
+let startX=0;  
+document.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; });  
+document.addEventListener('touchend', e=>{  
+  let diff=startX - e.changedTouches[0].clientX;  
+  if(Math.abs(diff)>50){ diff>0?nextSlide():prevSlide(); }  
+});  
+</script>  
+</body>  
+</html>
